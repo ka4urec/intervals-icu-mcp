@@ -1,6 +1,6 @@
 """Vercel ASGI entrypoint for the Intervals.icu MCP server.
 
-The MCP endpoint is exposed at /api/mcp/ (Vercel function prefix + FastMCP path).
+The MCP endpoint is exposed at /api (the Vercel function route).
 Set INTERVALS_ICU_API_KEY, INTERVALS_ICU_ATHLETE_ID and MCP_AUTH_TOKEN
 in the Vercel project environment variables before enabling the deployment.
 """
@@ -20,7 +20,7 @@ _token = os.environ.get("MCP_AUTH_TOKEN", "")
 if not _token:
     raise RuntimeError("MCP_AUTH_TOKEN must be configured in the Vercel project.")
 
-_mcp_app = mcp.http_app(stateless_http=True)
+_mcp_app = mcp.http_app(path="/", stateless_http=True)
 
 
 class BearerTokenMiddleware:
